@@ -61,12 +61,25 @@ def netcat(hn, p):
     for _ in range(3):
         print(file.readline().decode())
     for _ in range(30):
-        for _ in range(4):
-            print(file.readline().decode())
+        print(file.readline().decode())
+        res = file.readline().decode()
+        print(res)
+        paket_soal = res.split('=')[-1].strip().strip('\n')
+        res = file.readline().decode()
+        print(res)        
+        n = res.split('=')[-1].strip().strip('\n')
+        res = file.readline().decode()
+        print(res)
+        e = res.split('=')[-1].strip().strip('\n')
+        res = file.readline().decode()
+        print(res)        
+        c = res.split('=')[-1].strip().strip('\n')
+        n = int(n)
+        e = int(e)
+        c = int(c)
         m_asli = solve(paket_soal,n,e,c)
         sock.send(m_asli.encode())
-        for _ in range(2):
-            print(file.readline().decode())
+        print(file.readline().decode(), m_asli)
     print(file.readline().decode()) # flag
     sock.close()
 
