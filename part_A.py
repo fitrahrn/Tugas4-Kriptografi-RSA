@@ -43,7 +43,10 @@ def solve(paket_soal, n, e, c):
         m_asli = long_to_bytes(m_int).decode()
         return m_asli
     elif (paket_soal=='E'):
-        pass
+        totient = n-1 # because n is prime
+        d = pow(e, -1, totient)
+        m = pow(c, d, n)
+        return long_to_bytes(m).decode()
     return "0"
 
 def netcat(hn, p):
