@@ -1,6 +1,7 @@
 import socket
 from decimal import *
 from Crypto.Util.number import *
+import math
 
 getcontext().prec = 700
 
@@ -19,7 +20,17 @@ def find_cube_root(x):
 
 def solve(paket_soal, n, e, c):
     if(paket_soal=='A'):
-        pass
+        k = math.ceil(Decimal(n).sqrt())
+        print(k)
+        factor = (k*k - n)
+        print(factor)
+        p = k + factor
+        q = k - factor
+        tot = (p-1)*(q-1)
+        d = pow(e,-1,tot)
+        m_int = pow(c,d,n)
+        m_asli = long_to_bytes(m_int).decode()
+        return m_asli
     elif (paket_soal=='B'):
         p = int(Decimal(n).sqrt())
         # print(p)
