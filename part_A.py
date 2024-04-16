@@ -2,6 +2,7 @@ import socket
 from decimal import *
 from Crypto.Util.number import *
 import math
+import time
 
 getcontext().prec = 700
 
@@ -21,16 +22,20 @@ def find_cube_root(x):
 def solve(paket_soal, n, e, c):
     if(paket_soal=='A'):
         k = math.ceil(Decimal(n).sqrt())
-        print(k)
-        factor = (k*k - n)
-        print(factor)
-        p = k + factor
-        q = k - factor
-        tot = (p-1)*(q-1)
-        d = pow(e,-1,tot)
-        m_int = pow(c,d,n)
-        m_asli = long_to_bytes(m_int).decode()
-        return m_asli
+        while True:
+            # print(k)
+            diff2 = (k*k - n)
+            diff = math.ceil(Decimal(diff2).sqrt())
+            if(diff*diff == diff2):
+                # print(diff)
+                p = k + diff
+                q = k - diff
+                tot = (p-1)*(q-1)
+                d = pow(e,-1,tot)
+                m_int = pow(c,d,n)
+                m_asli = long_to_bytes(m_int).decode()
+                return m_asli
+            k += 1
     elif (paket_soal=='B'):
         p = int(Decimal(n).sqrt())
         # print(p)
@@ -94,6 +99,7 @@ def netcat(hn, p):
         m_asli = solve(paket_soal,n,e,c)
         sock.send(m_asli.encode())
         print(file.readline().decode(), m_asli)
+        time.sleep(1)
     print(file.readline().decode()) # flag
     sock.close()
 
