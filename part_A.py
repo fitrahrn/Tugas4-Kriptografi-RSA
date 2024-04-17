@@ -10,38 +10,49 @@ def find_cube_root(x):
     l = 1
     r = int(Decimal(x).sqrt())
     ret = -1
+    # print(f"Rentang pencarian: [{l}, {r}]")
+    iter = 0
     while (l<=r):
+        iter +=1
         mid = (l+r)//2
         if(mid**3 <= x):
             ret = mid
             l = mid+1
         else:
             r = mid-1
+    # print(f"plain yang ditemukan: {ret}")
+    # print(f"Banyak iterasi dalam binary search: {iter}")
     return ret
 
 def solve(paket_soal, n, e, c):
     if(paket_soal=='A'):
         k = math.ceil(Decimal(n).sqrt())
+        # print(f"[k awal: {k}]")
         while True:
-            # print(k)
             diff2 = (k*k - n)
             diff = math.ceil(Decimal(diff2).sqrt())
             if(diff*diff == diff2):
-                # print(diff)
+                # print(f"[k: {k}]")
+                # print(f"[h: {diff}, h^2: {diff2}]")
                 p = k + diff
                 q = k - diff
+                # print(f"[p: {p}, q: {q}]")
                 tot = (p-1)*(q-1)
+                # print(f"[totient: {tot}]")
                 d = pow(e,-1,tot)
+                # print(f"[d: {d}]")
                 m_int = pow(c,d,n)
                 m_asli = long_to_bytes(m_int).decode()
                 return m_asli
             k += 1
     elif (paket_soal=='B'):
         p = int(Decimal(n).sqrt())
-        # print(p)
+        # print(f"[p: {p}]")
         # print(isPrime(p))
         tot = (p)*(p-1)
+        # print(f"[tot: {tot}]")
         d = pow(e, -1, tot)
+        # print(f"[d: {d}]")
         m_int = pow(c, d, n)
         m_asli = long_to_bytes(m_int).decode() 
         return m_asli
@@ -51,6 +62,7 @@ def solve(paket_soal, n, e, c):
                 m_int = pow(c,d,n)
                 m_asli = long_to_bytes(m_int).decode()
                 if(m_asli.startswith("KRIPTOGRAFIITB{")):
+                    # print(f"[nilai d yang tepat: {d}]")
                     return m_asli
             except Exception as e:
                 continue
